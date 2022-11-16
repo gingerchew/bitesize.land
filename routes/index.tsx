@@ -1,9 +1,7 @@
 import { Head, asset } from "$fresh/runtime.ts";
 import EditorArea from "#/islands/EditorArea.tsx";
 import { injectGlobal } from "emotion";
-import { createContext } from "preact";
-import { ReadonlySignal, signal, Signal } from "@preact/signals-core";
-import Icons from "../components/Icons.tsx";
+import Icons from "#/components/Icons.tsx";
 
 
 const ink = "#b51bed",

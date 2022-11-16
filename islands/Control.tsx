@@ -1,4 +1,3 @@
-import { useState } from 'preact/hooks';
 import { JSX } from 'https://esm.sh/v94/preact@10.11.0/jsx-runtime/src/index.d.ts';
 
 // @DEPRECATED

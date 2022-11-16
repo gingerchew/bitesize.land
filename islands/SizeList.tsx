@@ -2,7 +2,7 @@ import List from '#/components/List.tsx';
 import { compress as _brotli } from "https://deno.land/x/brotli@0.1.7/mod.ts";
 import { zip } from "https://esm.sh/gzip-js@0.3.2";
 import { ByteLength, ByteState } from '#/islands/EditorArea.tsx';
-import { useEffect, useMemo, useState } from 'preact/hooks';
+import { useMemo, useState } from 'preact/hooks';
 
 
 interface Options {

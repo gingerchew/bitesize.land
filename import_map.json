@@ -1,0 +1,17 @@
+{
+  "imports": {
+    "$fresh/": "https://deno.land/x/fresh@1.1.2/",
+    "preact": "https://esm.sh/preact@10.11.0",
+    "preact/": "https://esm.sh/preact@10.11.0/",
+    "preact-render-to-string": "https://esm.sh/*preact-render-to-string@5.2.4",
+    "@preact/signals": "https://esm.sh/*@preact/signals@1.1.2",
+    "@preact/signals-core": "https://esm.sh/*@preact/signals-core@1.2.2",
+    
+    "emotion":"https://deno.land/x/fresh_emotion@v0.0.1/mod.ts",
+    "@emotion/cache": "https://esm.sh/@emotion/cache@11.10.3",
+    "@emotion/css/create-instance": "https://esm.sh/@emotion/css@11.10.0/create-instance",
+    "@emotion/server/create-instance": "https://esm.sh/@emotion/server@11.10.0/create-instance",
+
+    "#/": "./"
+  }
+}

@@ -4,6 +4,36 @@ import { gzipEncode as gzip } from "https://raw.githubusercontent.com/manyuanron
 import { ByteLength, ControlStates, ControlContext } from '#/islands/EditorArea.tsx';
 import { useContext, useEffect, useState } from 'preact/hooks';
 
+export const byteCountStyles = `
+    .byte-count {
+    text-align: right;
+    font-size: clamp(24px, 24px + 1vw, 35px);
+    font-weight: 800;
+    display: grid;
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(4, 1em);
+    gap: 0.5ch;
+  }
+  .byte-count small {
+    font-weight: 500;
+    font-size: clamp(18px, 18px + 1vw, 28px);
+  }
+  .byte-count * {
+    font-variant: tabular-num;
+  }
+  .byte-count [aria-hidden="true"],
+  .sr-only {
+    clip: rect(0 0 0 0);
+    clip-path: inset(50%);
+    position: absolute;
+    height: 1px;
+    overflow: hidden;
+    white-space: nowrap;
+    width: 1px;
+    grid-row: 4;
+  }`
+
+
 const byte0 = '0 B';
 const encoder = new TextEncoder();
 const k = 1024
@@ -31,7 +61,7 @@ const calculateByteSize = (value:string, options: ControlStates, cb: (state: Byt
     }
     
     let v = value as string;
-    if (options.isWhiteSpaceIgnored) {
+    if (!options.isWhiteSpaceIncluded) {
         v = v.replaceAll(/\s/gm, '');
     }
 

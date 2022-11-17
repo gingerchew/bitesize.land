@@ -1,17 +1,15 @@
-import { ByteLength, ControlContext } from '#/islands/EditorArea.tsx';
-import { useContext } from 'preact/hooks';
+import { ByteLength } from '#/islands/EditorArea.tsx';
 
 export default function List(props: { 
-    byteSize: ByteLength
+    byteSize: ByteLength;
+    isGzipChecked: boolean;
+    isBrotliChecked: boolean;
 }) {
     const {
-        currentControls: {
-            isGzipChecked,
-            isBrotliChecked
-        }
-    } = useContext(ControlContext)
-
-    const byteSize = props.byteSize;
+        byteSize,
+        isGzipChecked,
+        isBrotliChecked
+    } = props;
 
     return (
         <>

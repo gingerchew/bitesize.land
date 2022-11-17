@@ -14,12 +14,12 @@ export default function List(props: {
     return (
         <>
             <div class="byte-count">
-                <span>{byteSize.length || '0 Bytes'}</span>
+                <span>{byteSize.length || "0 B"}</span>
                 <small aria-hidden={!isGzipChecked}>
-                    {byteSize.gzip || "0 Bytes"} (gzip)
+                    {byteSize.gzip || "0 B"} (gzip)
                 </small>
                 <small aria-hidden={!isBrotliChecked}>
-                    {byteSize.brotli || "0 Bytes"} (br)
+                    {byteSize.brotli || "0 B"} (br)
                 </small>
             </div>
         </>

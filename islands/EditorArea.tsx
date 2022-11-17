@@ -1,14 +1,14 @@
 import { StateUpdater, useState } from "preact/hooks";
 import { createContext, createRef } from "preact";
 import TextArea from "#/components/TextArea.tsx";
+import Button from "#/components/Button.tsx";
 import SizeList from "#/islands/SizeList.tsx";
 import Controls from "#/islands/Controls.tsx";
-import Icons from "#/components/Icons.tsx";
 
 const ControlDefaults = {
   isGzipChecked: false,
   isBrotliChecked: false,
-  isWhiteSpaceIgnored: false,
+  isWhiteSpaceIncluded: true,
   gzipLevel: 6,
   paneState: false,
 }
@@ -40,7 +40,7 @@ export default function EditorArea() {
   const [currentControls, setControl] = useState<ControlStates>({
     isGzipChecked: false,
     isBrotliChecked: false,
-    isWhiteSpaceIgnored: false,
+    isWhiteSpaceIncluded: true,
     paneState: false,
     gzipLevel: 6
   });
@@ -56,15 +56,7 @@ export default function EditorArea() {
           onClick={onClick}
         >
           <div className="controls" data-pane={currentControls.paneState}>
-            <div className="btn-wrapper">
-              <button id="toggleSettingsPane" onClick={_ => {
-                  // @ts-ignore: Something about `this`
-                  onClick?.(null)
-              }}>
-                  Advanced Options 
-                  <Icons.Settings />
-              </button>
-            </div>
+            <Button onClick={onClick} />
             <Controls />
           </div>
           <SizeList

@@ -3,6 +3,7 @@ import { createContext, createRef } from "preact";
 import TextArea from "#/components/TextArea.tsx";
 import SizeList from "#/islands/SizeList.tsx";
 import Controls from "#/islands/Controls.tsx";
+import Icons from "#/components/Icons.tsx";
 
 const ControlDefaults = {
   isGzipChecked: false,
@@ -35,7 +36,7 @@ export interface ByteLength {
 
 export default function EditorArea() {
   const [state, setState] = useState("");
-  const [paneState, setPaneState] = useState(false);
+  
   const [currentControls, setControl] = useState<ControlStates>({
     isGzipChecked: false,
     isBrotliChecked: false,
@@ -50,13 +51,22 @@ export default function EditorArea() {
   return (
     <>
       <ControlContext.Provider value={{ currentControls, setControl }}>
-        <div className="controls" data-pane={currentControls.paneState}>
-          <Controls />
-        </div>
         <TextArea
           onInput={(e) => onInput(e.target as unknown as HTMLTextAreaElement)}
           onClick={onClick}
         >
+          <div className="controls" data-pane={currentControls.paneState}>
+            <div className="btn-wrapper">
+              <button id="toggleSettingsPane" onClick={_ => {
+                  // @ts-ignore: Something about `this`
+                  onClick?.(null)
+              }}>
+                  Advanced Options 
+                  <Icons.Settings />
+              </button>
+            </div>
+            <Controls />
+          </div>
           <SizeList
             value={state}
           />

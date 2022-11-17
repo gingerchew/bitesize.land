@@ -4,79 +4,38 @@ import { useContext } from "preact/hooks";
 import { JSX } from "https://esm.sh/v94/preact@10.11.0/jsx-runtime/src/index.d.ts";
 import { ControlContext } from "#/islands/EditorArea.tsx";
 
-const SummaryWrapper = (props: JSX.HTMLAttributes<HTMLDetailsElement>) => {
-  return (
-    <>
-      <details>
-        <summary>{props.title}</summary>
-        <div className="content">
-          {props.children}
-        </div>
-      </details>
-    </>
-  );
-};
-
 export default function Controls() {
   const { currentControls, setControl } = useContext(ControlContext);
 
   return (
-    <>
-        <div class="controls-compression">
-            <Toggle 
-                for="useGzip"
-                label="GZIP"
-                onChange={({ target }) => setControl({
-                    ...currentControls,
-                    isGzipChecked: (target as HTMLInputElement)?.checked
-                })}
-            />
-            <Toggle 
-                for="useBrotli"
-                label="Brotli"
-                onChange={({ target }) => setControl({
-                    ...currentControls,
-                    isBrotliChecked: (target as HTMLInputElement)?.checked
-                })}
-            />
-        </div>
-        <Control
-          id="includeWhiteSpace"
-          label="Include White Space?"
-          type="checkbox"
+      <div class="controls-compression">
+          <Toggle 
+              for="useGzip"
+              label="GZIP"
+              checked={currentControls.isGzipChecked}
+              onChange={({ target }) => setControl({
+                  ...currentControls,
+                  isGzipChecked: (target as HTMLInputElement)?.checked
+              })}
+          />
+          <Toggle 
+              for="useBrotli"
+              label="Brotli"
+              checked={currentControls.isBrotliChecked}
+              onChange={({ target }) => setControl({
+                  ...currentControls,
+                  isBrotliChecked: (target as HTMLInputElement)?.checked
+              })}
+          />
+        <Toggle
+          for="includeWhiteSpace"
+          label="Include White Space"
           checked={!currentControls.isWhiteSpaceIgnored}
-          onChange={({ target }) => {
-            const el = target as HTMLInputElement;
-            setControl({
-              ...currentControls,
-              isWhiteSpaceIgnored: !el?.checked,
-            });
-          }}
+          onChange={({ target }) => setControl({
+            ...currentControls,
+            isWhiteSpaceIgnored: (target as HTMLInputElement)?.checked
+          })}
         />
-        <SummaryWrapper title="Advanced">
-          <Control
-            id="gzipLevel"
-            label="GZIP Level"
-            type="select"
-            onChange={({ target }) => {
-              const el = target as HTMLSelectElement;
-              setControl({
-                ...currentControls,
-                gzipLevel: +el.value,
-              });
-            }}
-          >
-            <option selected={currentControls.gzipLevel === 1} value="1">
-              Low
-            </option>
-            <option selected={currentControls.gzipLevel === 6} value="6">
-              Default
-            </option>
-            <option selected={currentControls.gzipLevel === 9} value="9">
-              High
-            </option>
-          </Control>
-        </SummaryWrapper>
-    </>
+      </div>
   );
 }

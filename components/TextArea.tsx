@@ -1,17 +1,20 @@
-import { useContext } from 'https://esm.sh/v94/preact@10.11.0/hooks/src/index.d.ts';
-import { JSX, Ref } from 'preact';
+import { JSX } from 'preact';
+import { textareaRef } from "#/islands/EditorArea.tsx";
+import Icons from "#/components/Icons.tsx";
 
-interface TextAreaProps extends JSX.HTMLAttributes<HTMLTextAreaElement> {
-    childRef: Ref<HTMLTextAreaElement>
-}
-
-export default function TextArea(props: TextAreaProps) {
+export default function TextArea(props: JSX.HTMLAttributes<HTMLTextAreaElement>) {
     return (
         <>
             <div className="textarea-wrapper">
                 <textarea rows={10}
-                    ref={props.childRef}
+                    ref={textareaRef}
                     onInput={props.onInput}></textarea>
+                <button id="toggleSettingsPane" onClick={_ => {
+                    // @ts-ignore: Something about `this`
+                    props.onClick?.(null)
+                }}>
+                    <Icons.Settings />
+                </button>
                 {props.children}
             </div>
         </>

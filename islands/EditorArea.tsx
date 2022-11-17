@@ -8,7 +8,8 @@ const ControlDefaults = {
   isGzipChecked: false,
   isBrotliChecked: false,
   isWhiteSpaceIgnored: false,
-  gzipLevel: 6
+  gzipLevel: 6,
+  paneState: false,
 }
 
 export type ControlStates = typeof ControlDefaults
@@ -24,18 +25,7 @@ type ControlContext = {
 
 export const ControlContext = createContext<ControlContext>({} as ControlContext);
 
-
-/**
- * @NOTE Moving to preact/Signals and running into some rough spots.
- *
- * The state.byteChecks is undefined for some reason, despite the
- * context being created in _app.tsx with an actual object
- *
- * Need to look more into using context like this, or revert to
- * just passing props all the way down
- */
-
-const textareaRef = createRef<HTMLTextAreaElement>();
+export const textareaRef = createRef<HTMLTextAreaElement>();
 
 export interface ByteLength {
   gzip?: string;
@@ -45,31 +35,30 @@ export interface ByteLength {
 
 export default function EditorArea() {
   const [state, setState] = useState("");
-
+  const [paneState, setPaneState] = useState(false);
   const [currentControls, setControl] = useState<ControlStates>({
     isGzipChecked: false,
     isBrotliChecked: false,
     isWhiteSpaceIgnored: false,
+    paneState: false,
     gzipLevel: 6
   });
 
   const onInput = (target: HTMLTextAreaElement) => setState(target.value);
+  const onClick = () => setControl({ ...currentControls, paneState: !currentControls.paneState });
 
   return (
     <>
       <ControlContext.Provider value={{ currentControls, setControl }}>
-        <div className="controls">
+        <div className="controls" data-pane={currentControls.paneState}>
           <Controls />
         </div>
         <TextArea
-          childRef={textareaRef}
           onInput={(e) => onInput(e.target as unknown as HTMLTextAreaElement)}
+          onClick={onClick}
         >
           <SizeList
             value={state}
-            gzipLevel={currentControls.gzipLevel}
-            isBrotliChecked={currentControls.isBrotliChecked}
-            isGzipChecked={currentControls.isGzipChecked}
           />
         </TextArea>
       </ControlContext.Provider>

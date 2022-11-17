@@ -1,10 +1,15 @@
-import { ByteLength } from '#/islands/EditorArea.tsx';
+import { ByteLength, ControlContext } from '#/islands/EditorArea.tsx';
+import { useContext } from 'preact/hooks';
 
 export default function List(props: { 
-    byteSize: ByteLength,
-    isGzipChecked: boolean;
-    isBrotliChecked: boolean;
+    byteSize: ByteLength
 }) {
+    const {
+        currentControls: {
+            isGzipChecked,
+            isBrotliChecked
+        }
+    } = useContext(ControlContext)
 
     const byteSize = props.byteSize;
 
@@ -12,11 +17,11 @@ export default function List(props: {
         <>
             <div class="byte-count">
                 <span>{byteSize.length || '0 Bytes'}</span>
-                <small aria-hidden={!props.isGzipChecked}>
-                    {byteSize.gzip} (gzip)
+                <small aria-hidden={!isGzipChecked}>
+                    {byteSize.gzip || "0 Bytes"} (gzip)
                 </small>
-                <small aria-hidden={!props.isBrotliChecked}>
-                    {byteSize.brotli} (br)
+                <small aria-hidden={!isBrotliChecked}>
+                    {byteSize.brotli || "0 Bytes"} (br)
                 </small>
             </div>
         </>

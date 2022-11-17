@@ -1,9 +1,10 @@
 import List from '#/components/List.tsx';
 import { compress as _brotli } from "https://deno.land/x/brotli@0.1.7/mod.ts";
 import { zip } from "https://esm.sh/gzip-js@0.3.2";
-import { ByteLength, ByteState } from '#/islands/EditorArea.tsx';
-import { useMemo, useState } from 'preact/hooks';
-
+import { ByteLength, SizeListProps } from '#/islands/EditorArea.tsx';
+import { useContext, useEffect, useState } from 'preact/hooks';
+import { ControlContext } from "#/islands/EditorArea.tsx";
+// import Control from './Control.tsx';
 
 interface Options {
     isGzipChecked: boolean;
@@ -33,7 +34,10 @@ const calculateByteSize = (value:string, options: Options, cb: (state: ByteLengt
         length: byte0
     };
 
-    if (!value) return res;
+    if (!value) {
+        cb(res);
+        return;
+    }
     
     let v = value as string;
     if (options.isWhiteSpaceIgnored) {
@@ -47,33 +51,8 @@ const calculateByteSize = (value:string, options: Options, cb: (state: ByteLengt
     const length = getUnit(encodedLength);
 
     res.length = length;
-    /*
-    if (options.isBrotliChecked || options.isGzipChecked) {
-        const {
-            isBrotliChecked,
-            isGzipChecked,
-        } = options;
 
-        const compressed = await fetch(new URL(`/api/compress?gzip=${+isGzipChecked}&brotli=${isBrotliChecked}`, import.meta.url), {
-            method: 'POST',
-            body: JSON.stringify({
-                gzip: +isGzipChecked,
-                brotli: +isBrotliChecked,
-                text: v
-            })
-        })
-
-        const {
-            gzip: _gzip,
-            brotli: _brotli
-        } = await compressed.json();
-
-        res.gzip = _gzip;
-        res.brotli = _brotli;
-    }*/
-    
     if (options.isGzipChecked && v) {
-        // const gzip = await fetch(new URL('compress?gzip', import.meta.url));
         const level = options.gzipLevel || 6;
 
         const output = zip(v, {
@@ -94,21 +73,22 @@ const calculateByteSize = (value:string, options: Options, cb: (state: ByteLengt
     cb(res);
 }
 
-export default function SizeList(props:ByteState) {
+export default function SizeList(props: SizeListProps) {
+    const {
+        currentControls
+    } = useContext(ControlContext);
+
     const [byteSize, setByteSize] = useState<ByteLength>({})
     
-    useMemo(() => {
-        calculateByteSize(props.byteSize, {
-                ...props.byteChecks,
-                gzipLevel: props.gzipLevel
+    useEffect(() => {
+        calculateByteSize(props.value, {
+                ...currentControls
             },
             setByteSize
         );
-    }, [ props.byteChecks, props.byteSize, props.gzipLevel ]);
+    }, [ currentControls, props.value, props.gzipLevel ]);
 
     return <List 
         byteSize={byteSize}
-        isGzipChecked={props.byteChecks.isGzipChecked}
-        isBrotliChecked={props.byteChecks.isBrotliChecked}
     />
 }

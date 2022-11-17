@@ -4,7 +4,6 @@ import { zip } from "https://esm.sh/gzip-js@0.3.2";
 import { ByteLength, SizeListProps } from '#/islands/EditorArea.tsx';
 import { useContext, useEffect, useState } from 'preact/hooks';
 import { ControlContext } from "#/islands/EditorArea.tsx";
-// import Control from './Control.tsx';
 
 interface Options {
     isGzipChecked: boolean;

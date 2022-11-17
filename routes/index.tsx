@@ -5,7 +5,7 @@ export default function Home() {
   return (
     <>
       <Head>
-        <title>Chomp Chomp</title>
+        <title>BiteSize.Land</title>
       </Head>
       <EditorArea />
     </>

@@ -2,11 +2,14 @@ import { AppProps } from "$fresh/server.ts";
 import Icons from "#/components/Icons.tsx";
 import { Head,asset } from "$fresh/runtime.ts";
 import { injectGlobal } from "emotion"
+import { toggleStyles } from "#/components/Toggle.tsx"
 
-
+/*
 export const ink = "#b51bed",
   paper = "#f5fad9"
-
+*/
+export const ink = "#03104e",
+  paper = "skyblue";
 
 injectGlobal`
   *,
@@ -38,15 +41,21 @@ injectGlobal`
   @media (min-width: 768px) {
     body {
       grid-template-areas: 'header header' 'controls body' '. body' 'footer footer';
+      grid-template-columns: min-content 1fr;
+      transition: grid-template-columns 0.25s ease;
+    }
+    body:has([data-pane="true"]) {
       grid-template-columns: minmax(min-content, max-content) 1fr;
     }
   }
+
 
   header {
     display: grid;
     gap: 1rem;
     align-content: center;
     grid-area: header;
+    padding-top: 10vh;
   }
   header > * {
     margin: 0;
@@ -91,24 +100,68 @@ injectGlobal`
     }
   }
   .controls {
+    max-width: calc(195px + 2vmin);
     padding: 1vmin;
-    display: flex;
-    justify-content: space-around;
+    padding-left: 2vmin;
+    width: 100%;
+    display: grid;
+    justify-content: center;
     align-items: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto;
     grid-area: controls;
+    gap: 0.5rem;
+    transition: max-width 0.25s ease;
+    overflow: hidden;
+  }
+  .controls:not([data-pane="true"]) {
+    max-width: 0px;
+    padding: 0;
+    padding-top: 1vmin;
   }
   @media (min-width: 768px) {
     .controls {
-      flex-direction: column;
-      align-items: start;
-      justify-content: center;
+      grid-template-columns: 1fr;
+      grid-auto-rows: auto;
       gap: 1rem;
     }
   }
+  .controls-compression {
+    display: flex;
+    gap: 1rem;
+  }
+  .controls details,
   .control {
     display: flex;
-    gap: 1ch;
+    gap: 0.25ch;
+    justify-content: center;
   }
+
+  .controls details {
+    text-align: center;
+  }
+  
+  @media (min-width: 768px) {
+    .controls details,
+    .control {
+      justify-content: start;
+      text-align: left;
+    }
+  }
+
+  button {
+    background-color: transparent;
+    color: var(--ink);
+    border: unset;
+    grid-column: 1 / 1;
+    grid-row: 1 / 1;
+    max-width: 3rem;
+    justify-self: end;
+    align-self: start;
+    width: 100%;
+    padding: 0.5rem;
+  }
+
   textarea {
     max-width: 100%;
     width: 100%;
@@ -116,6 +169,8 @@ injectGlobal`
     border: 3px solid var(--ink);
     border-radius: 0;
     resize: vertical;
+    grid-column: 1 / 1;
+    grid-row: 1 / 1;
   }
   input {
     accent-color: var(--ink);
@@ -148,6 +203,15 @@ injectGlobal`
     color: var(--ink);
     width: 100%;
   }
+
+  .gui-switch {
+    --track-inactive: ${paper};
+    --track-active: ${ink};
+
+    --track-color-inactive: ${paper};
+    --track-color-active: ${ink};
+  }
+  ${toggleStyles}
 `;
 
 
@@ -160,21 +224,21 @@ export default function App({ Component }: AppProps) {
         <meta name="theme-color" content={ink} />
       </Head>
       <header>
-        <h1>Chomp Chomp</h1>
+        <h1>BiteSize.Land</h1>
         <p>Inspired by <a href="https://bytesizematters.com">ByteSizeMatters</a> by <a href="https://lea.verou.me/">Lea Verou</a></p>
       </header>
       <Component />
       <footer>
         <a href="https://github.com/gingerchew/bitesize.land" className="icon-wrapper">
           <span class="sr-only">Github</span>
-          <Icons name="Github" />
+          <Icons.Github />
         </a>
         <a href="https://fresh.deno.dev">
           <img width="197" height="37" src="https://fresh.deno.dev/fresh-badge-dark.svg" alt="Made with Fresh" />
         </a>
         <a href="https://twitter.com/gingercheww" className="icon-wrapper">
           <span class="sr-only">Twitter</span>
-          <Icons name="Twitter" />
+          <Icons.Twitter />
         </a>
       </footer>
       <script defer data-domain="bitesize.land" src="https://plausible.io/js/script.js"></script>

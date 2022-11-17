@@ -1,10 +1,10 @@
 import List from '#/components/List.tsx';
 import { compress as _brotli } from "https://deno.land/x/brotli@0.1.7/mod.ts";
-import { zip } from "https://esm.sh/gzip-js@0.3.2";
-import { ByteLength, ControlStates, SizeListProps, ControlContext } from '#/islands/EditorArea.tsx';
+import { gzipEncode as gzip } from "https://raw.githubusercontent.com/manyuanrong/wasm_gzip/master/mod.ts";
+import { ByteLength, ControlStates, ControlContext } from '#/islands/EditorArea.tsx';
 import { useContext, useEffect, useState } from 'preact/hooks';
 
-const byte0 = '0 Bytes';
+const byte0 = '0 B';
 const encoder = new TextEncoder();
 const k = 1024
 const sizes = ['Bytes', 'KB', 'MB', 'GB', 'TB', 'PB', 'EB', 'ZB', 'YB']
@@ -44,11 +44,7 @@ const calculateByteSize = (value:string, options: ControlStates, cb: (state: Byt
     res.length = length;
 
     if (options.isGzipChecked && v) {
-        const level = options.gzipLevel || 6;
-
-        const output = zip(v, {
-            level
-        });
+        const output = gzip(encodedValue);
 
         res.gzip = getUnit(output.length);
     }

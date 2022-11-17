@@ -1,16 +1,8 @@
 import List from '#/components/List.tsx';
 import { compress as _brotli } from "https://deno.land/x/brotli@0.1.7/mod.ts";
 import { zip } from "https://esm.sh/gzip-js@0.3.2";
-import { ByteLength, SizeListProps } from '#/islands/EditorArea.tsx';
+import { ByteLength, ControlStates, SizeListProps, ControlContext } from '#/islands/EditorArea.tsx';
 import { useContext, useEffect, useState } from 'preact/hooks';
-import { ControlContext } from "#/islands/EditorArea.tsx";
-
-interface Options {
-    isGzipChecked: boolean;
-    isBrotliChecked: boolean;
-    isWhiteSpaceIgnored: boolean;
-    gzipLevel: number;
-}
 
 const byte0 = '0 Bytes';
 const encoder = new TextEncoder();
@@ -26,7 +18,7 @@ export const getUnit = (value:number, decimals = 2) => {
     return `${parseFloat(v.toFixed(decimals < 0 ? 0 : decimals))} ${sizes[i]}`;
 }
 
-const calculateByteSize = (value:string, options: Options, cb: (state: ByteLength) => void) => {
+const calculateByteSize = (value:string, options: ControlStates, cb: (state: ByteLength) => void) => {
     const res = {
         gzip: byte0,
         brotli: byte0,
@@ -72,7 +64,7 @@ const calculateByteSize = (value:string, options: Options, cb: (state: ByteLengt
     cb(res);
 }
 
-export default function SizeList(props: SizeListProps) {
+export default function SizeList(props: { value: string }) {
     const {
         currentControls
     } = useContext(ControlContext);
@@ -85,9 +77,11 @@ export default function SizeList(props: SizeListProps) {
             },
             setByteSize
         );
-    }, [ currentControls, props.value, props.gzipLevel ]);
+    }, [ currentControls, props.value ]);
 
     return <List 
         byteSize={byteSize}
+        isGzipChecked={currentControls.isGzipChecked}
+        isBrotliChecked={currentControls.isBrotliChecked}
     />
 }

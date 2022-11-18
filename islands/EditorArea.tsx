@@ -1,7 +1,7 @@
 import { StateUpdater, useState } from "preact/hooks";
 import { createContext, createRef } from "preact";
 import TextArea from "#/components/TextArea.tsx";
-import Button from "#/components/Button.tsx";
+import SettingsButton from "#/components/SettingsButton.tsx";
 import SizeList from "#/islands/SizeList.tsx";
 import Controls from "#/islands/Controls.tsx";
 
@@ -48,15 +48,17 @@ export default function EditorArea() {
   const onInput = (target: HTMLTextAreaElement) => setState(target.value);
   const onClick = () => setControl({ ...currentControls, paneState: !currentControls.paneState });
 
+
   return (
     <>
       <ControlContext.Provider value={{ currentControls, setControl }}>
+        
         <TextArea
           onInput={(e) => onInput(e.target as unknown as HTMLTextAreaElement)}
           onClick={onClick}
         >
           <div className="controls" data-pane={currentControls.paneState}>
-            <Button onClick={onClick} />
+            <SettingsButton onClick={onClick} />
             <Controls />
           </div>
           <SizeList

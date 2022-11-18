@@ -20,6 +20,11 @@ export const textAreaStyles = `
     min-height: 10vh;
     background: #fff;
 }
+
+.dark .textarea {
+    background-color: #efefef;
+}
+
 .textarea:has(:focus-visible) {
     outline: 1px solid;
 }
@@ -32,6 +37,7 @@ export const textAreaStyles = `
     resize: vertical;
     width: 100%;
     outline-offset: 10px;
+    background-color: inherit;
 }
 .textarea-wrapper {
     padding: 1vmin;

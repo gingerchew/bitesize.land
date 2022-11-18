@@ -22,6 +22,16 @@ injectGlobal`
     --ink: ${ink};
     --paper: ${paper};
   }
+
+  @media (prefers-color-scheme: dark) {
+    *,
+    *::before,
+    *::after {
+      --ink: ${paper};
+      --paper: ${ink};
+    }
+  }
+
   html,
   body {
     margin: 0;
@@ -35,6 +45,8 @@ injectGlobal`
     font-family: system-ui, sans-serif;
     background-color: var(--paper);
     color: var(--ink);
+    transition: all 0.25s ease;
+    transition-property: color, background-color;
     grid-auto-rows: min-content;
     grid-template-columns: 1fr;
     grid-template-areas: 'header' 'controls' 'body' 'footer';
@@ -75,6 +87,7 @@ injectGlobal`
   }
   a {
     color: var(--ink);
+    transition: color 0.25s ease;
     font-weight: 700;
     letter-spacing: 0;
   }
@@ -97,6 +110,15 @@ injectGlobal`
 
     --track-color-inactive: ${paper};
     --track-color-active: ${ink};
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .gui-switch {
+      --track-inactive: ${ink};
+      --track-active: ${paper};
+      --track-color-inactive: ${ink};
+      --track-color-active: ${paper}
+    }
   }
 
   ${byteCountStyles}

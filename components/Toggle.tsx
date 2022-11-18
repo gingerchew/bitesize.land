@@ -6,6 +6,7 @@ const trackStyles = `
     .gui-switch {
         --track-size: calc(var(--thumb-size) * 2);
         --track-padding: 3px;
+        color: var(--ink);
         /* Colors found in _app */
     }
 

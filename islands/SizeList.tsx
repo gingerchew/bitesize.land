@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'preact/hooks';
 
 export const byteCountStyles = `
     .byte-count {
+        color: var(--ink);
     text-align: right;
     font-size: clamp(24px, 24px + 1vw, 35px);
     font-weight: 800;

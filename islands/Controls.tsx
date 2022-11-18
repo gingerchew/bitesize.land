@@ -75,27 +75,27 @@ export const controlStyles = `
 
 export default function Controls() {
   const { currentControls, setControl } = useContext(ControlContext);
-  
+  console.log(currentControls);
   return (
       <div class="controls-compression">
-          <Toggle 
-              for="useGzip"
-              label="GZIP"
-              checked={currentControls.isGzipChecked}
-              onChange={({ target }) => setControl({
-                  ...currentControls,
-                  isGzipChecked: (target as HTMLInputElement)?.checked
-              })}
-          />
-          <Toggle 
-              for="useBrotli"
-              label="Brotli"
-              checked={currentControls.isBrotliChecked}
-              onChange={({ target }) => setControl({
-                  ...currentControls,
-                  isBrotliChecked: (target as HTMLInputElement)?.checked
-              })}
-          />
+        <Toggle 
+            for="useGzip"
+            label="GZIP"
+            checked={currentControls.isGzipChecked}
+            onChange={({ target }) => setControl({
+                ...currentControls,
+                isGzipChecked: (target as HTMLInputElement)?.checked
+            })}
+        />
+        <Toggle 
+            for="useBrotli"
+            label="Brotli"
+            checked={currentControls.isBrotliChecked}
+            onChange={({ target }) => setControl({
+                ...currentControls,
+                isBrotliChecked: (target as HTMLInputElement)?.checked
+            })}
+        />
         <Toggle
           for="includeWhiteSpace"
           label="Include White Space"

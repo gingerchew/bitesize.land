@@ -81,9 +81,13 @@ export const toggleStyles = [trackStyles, thumbStyles].join('')
 export default function Toggle(props: JSX.HTMLAttributes<HTMLLabelElement>) {
     return <label for={props.for} class="gui-switch">
         {props.label}
-        <input type="checkbox" role="switch" id={props.for} onChange={(e) => 
-            // @ts-ignore: Typescript being weird
-            props.onChange?.(e)
-        } />
+        <input type="checkbox" 
+            role="switch" 
+            id={props.for} 
+            checked={props.checked}
+            onChange={(e) => 
+                // @ts-ignore: Typescript being weird
+                props.onChange?.(e)
+            } />
     </label>
 }

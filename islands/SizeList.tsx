@@ -47,53 +47,58 @@ export const getUnit = (value:number, decimals = 2) => {
     
     return `${parseFloat(v.toFixed(decimals < 0 ? 0 : decimals))} ${sizes[i]}`;
 }
+const res = {
+    prev: '',
+    gzip: byte0,
+    brotli: byte0,
+    length: byte0
+};
+type CalculateOptions = Omit<Omit<ControlStates, "gzipLevel">, "paneState">;
 
-const calculateByteSize = (value:string, options: ControlStates, cb: (state: ByteLength) => void) => {
-    const res = {
-        gzip: byte0,
-        brotli: byte0,
-        length: byte0
-    };
-
+const calculateByteSize = (value:string, options: CalculateOptions, cb: (state: ByteLength) => void) => {
+    
     if (!value) {
         cb(res);
         return;
     }
     
     let v = value as string;
+    
     if (!options.isWhiteSpaceIncluded) {
         v = v.replaceAll(/\s/gm, '');
     }
+    
+    if (res.prev === v) return cb(res);
+    
+    res.prev = v;
 
     const encodedValue = encoder.encode(v);
     
     const encodedLength = encodedValue.length;
     
-    const length = getUnit(encodedLength);
+    res.length = res.length = getUnit(encodedLength);
 
-    res.length = length;
+    const gzipOutput = gzip(encodedValue);
 
-    if (options.isGzipChecked && v) {
-        const output = gzip(encodedValue);
+    res.gzip = res.gzip = getUnit(gzipOutput.length);
+    
+    const brotliOutput = _brotli(encodedValue);
 
-        res.gzip = getUnit(output.length);
-    }
-
-    if (options.isBrotliChecked && v) {
-        const input = new Uint8Array(encodedValue);
-        
-        const output = _brotli(input)
-
-        res.brotli = getUnit(output.length) // output.length
-    }
+    res.brotli = res.brotli = getUnit(brotliOutput.length) // output.length
     
     cb(res);
 }
 
 export default function SizeList(props: { value: string }) {
     const {
-        currentControls
+        currentControls: _currentControls
     } = useContext(ControlContext);
+    
+    const currentControls = {
+        isBrotliChecked: _currentControls.isBrotliChecked,
+        isGzipChecked: _currentControls.isGzipChecked,
+        isWhiteSpaceIncluded: _currentControls.isWhiteSpaceIncluded
+    };
 
     const [byteSize, setByteSize] = useState<ByteLength>({})
     

@@ -75,7 +75,7 @@ export const controlStyles = `
 
 export default function Controls() {
   const { currentControls, setControl } = useContext(ControlContext);
-  console.log(currentControls);
+  
   return (
       <div class="controls-compression">
         <Toggle 

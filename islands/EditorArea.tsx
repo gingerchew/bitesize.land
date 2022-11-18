@@ -36,7 +36,7 @@ export interface ByteLength {
 
 export default function EditorArea() {
   const [state, setState] = useState("");
-  
+  const [paneState, setPaneState] = useState(false);
   const [currentControls, setControl] = useState<ControlStates>({
     isGzipChecked: false,
     isBrotliChecked: false,
@@ -46,16 +46,15 @@ export default function EditorArea() {
   });
 
   const onInput = (target: HTMLTextAreaElement) => setState(target.value);
-  const onClick = () => setControl({ ...currentControls, paneState: !currentControls.paneState });
+  const onClick = () => setPaneState(!paneState);
 
   return (
     <>
       <ControlContext.Provider value={{ currentControls, setControl }}>
         <TextArea
           onInput={(e) => onInput(e.target as unknown as HTMLTextAreaElement)}
-          onClick={onClick}
         >
-          <div className="controls" data-pane={currentControls.paneState}>
+          <div className="controls" data-pane={paneState}>
             <Button onClick={onClick} />
             <Controls />
           </div>

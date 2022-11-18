@@ -1,4 +1,3 @@
-import { paper, ink } from "#/routes/_app.tsx"
 import { JSX } from "https://esm.sh/v94/preact@10.11.0/jsx-runtime/src/index.d.ts"
 
 // https://web.dev/building-a-switch-component/

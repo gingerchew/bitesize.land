@@ -1,12 +1,14 @@
-import { AppProps } from "$fresh/server.ts";
-import Icons from "#/components/Icons.tsx";
-import { Head,asset } from "$fresh/runtime.ts";
+import { AppProps, MiddlewareHandlerContext } from "$fresh/server.ts";
+import { Head, asset } from "$fresh/runtime.ts";
 import { injectGlobal } from "emotion"
 import { toggleStyles } from "#/components/Toggle.tsx"
 import { textAreaStyles } from "#/components/TextArea.tsx";
 import { byteCountStyles } from "#/islands/SizeList.tsx";
-import { buttonStyles } from "#/components/Button.tsx";
+import { buttonStyles } from "#/components/SettingsButton.tsx";
 import { controlStyles } from "#/islands/Controls.tsx";
+import { iconToggleStyles } from "#/components/IconToggle.tsx";
+import Footer from "#/islands/Footer.tsx";
+
 /*
 export const ink = "#b51bed",
   paper = "#f5fad9"
@@ -19,14 +21,19 @@ injectGlobal`
   *::before,
   *::after {
     box-sizing: border-box;
+  }
+  :root {
     --ink: ${ink};
     --paper: ${paper};
   }
 
+  :root.dark {
+    --ink: ${paper};
+    --paper: ${ink}
+  }
+  
   @media (prefers-color-scheme: dark) {
-    *,
-    *::before,
-    *::after {
+    :root {
       --ink: ${paper};
       --paper: ${ink};
     }
@@ -120,7 +127,7 @@ injectGlobal`
       --track-color-active: ${paper}
     }
   }
-
+  ${iconToggleStyles}
   ${byteCountStyles}
   ${toggleStyles}
 
@@ -138,23 +145,12 @@ export default function App({ Component }: AppProps) {
       </Head>
       <header>
         <h1>BiteSize.Land</h1>
-        <p>Inspired by <a href="https://bytesizematters.com">ByteSizeMatters</a> by <a href="https://lea.verou.me/">Lea Verou</a></p>
+        <p>
+          Inspired by <a href="https://bytesizematters.com">ByteSizeMatters</a> by <a href="https://lea.verou.me/">Lea Verou</a>.
+        </p>
       </header>
       <Component />
-      <footer>
-        <a href="https://github.com/gingerchew/bitesize.land" className="icon-wrapper">
-          <span class="sr-only">Github</span>
-          <Icons.Github />
-        </a>
-        <a href="https://fresh.deno.dev">
-          <img width="197" height="37" src="https://fresh.deno.dev/fresh-badge-dark.svg" alt="Made with Fresh" />
-        </a>
-        <a href="https://twitter.com/gingercheww" className="icon-wrapper">
-          <span class="sr-only">Twitter</span>
-          <Icons.Twitter />
-        </a>
-      </footer>
-      <script defer data-domain="bitesize.land" src="https://plausible.io/js/script.js"></script>
+      <Footer />
     </>
   );
 }

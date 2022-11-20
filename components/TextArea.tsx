@@ -19,6 +19,7 @@ export const textAreaStyles = `
     grid-row: 1 / 1;
     min-height: 10vh;
     background: #fff;
+    font-size: 16px;
 }
 
 .dark .textarea {

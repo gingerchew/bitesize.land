@@ -52,7 +52,6 @@ export default function EditorArea() {
   return (
     <>
       <ControlContext.Provider value={{ currentControls, setControl }}>
-        
         <TextArea
           onInput={(e) => onInput(e.target as unknown as HTMLTextAreaElement)}
         >

@@ -1,4 +1,4 @@
-import { AppProps, MiddlewareHandlerContext } from "$fresh/server.ts";
+import { AppProps } from "$fresh/server.ts";
 import { Head, asset } from "$fresh/runtime.ts";
 import { injectGlobal } from "emotion"
 import { toggleStyles } from "#/components/Toggle.tsx"
@@ -17,26 +17,39 @@ export const ink = "#03104e",
   paper = "skyblue";
 
 injectGlobal`
+:root {
+  color-scheme: dark light;
+  --ink: ${ink};
+  --paper: ${paper};
+}
+:root.dark {
+  --ink: ${paper};
+  --paper: ${ink}
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --ink: ${paper};
+    --paper: ${ink};
+  }
+}
+.gui-switch {
+  --track-inactive: ${paper};
+  --track-active: ${ink};
+  --track-color-inactive: ${paper};
+  --track-color-active: ${ink};
+}
+@media (prefers-color-scheme: dark) {
+  .gui-switch {
+    --track-inactive: ${ink};
+    --track-active: ${paper};
+    --track-color-inactive: ${ink};
+    --track-color-active: ${paper}
+  }
+}
   *,
   *::before,
   *::after {
     box-sizing: border-box;
-  }
-  :root {
-    --ink: ${ink};
-    --paper: ${paper};
-  }
-
-  :root.dark {
-    --ink: ${paper};
-    --paper: ${ink}
-  }
-  
-  @media (prefers-color-scheme: dark) {
-    :root {
-      --ink: ${paper};
-      --paper: ${ink};
-    }
   }
 
   html,
@@ -47,6 +60,7 @@ injectGlobal`
   }
   body {
     width: clamp(414px, 95vw, 880px);
+    max-width: 100vw;
     display: grid;
     margin: 0 auto;
     font-family: system-ui, sans-serif;
@@ -110,27 +124,9 @@ injectGlobal`
   }
   ${controlStyles}
   ${buttonStyles}
-
-  .gui-switch {
-    --track-inactive: ${paper};
-    --track-active: ${ink};
-
-    --track-color-inactive: ${paper};
-    --track-color-active: ${ink};
-  }
-
-  @media (prefers-color-scheme: dark) {
-    .gui-switch {
-      --track-inactive: ${ink};
-      --track-active: ${paper};
-      --track-color-inactive: ${ink};
-      --track-color-active: ${paper}
-    }
-  }
   ${iconToggleStyles}
   ${byteCountStyles}
   ${toggleStyles}
-
   ${textAreaStyles}
 `;
 
@@ -139,6 +135,7 @@ export default function App({ Component }: AppProps) {
   return (
     <>
       <Head>
+        <meta name="color-scheme" content="dark light" />
         <link href={asset('favicon.svg')} rel="icon" type="image/svg+xml" />
         <link href={asset('favicon.png')} rel="icon" type="image/png" />
         <meta name="theme-color" content={ink} />

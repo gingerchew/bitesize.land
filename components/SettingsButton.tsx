@@ -36,6 +36,7 @@ export default function SettingsButton(props: JSX.HTMLAttributes<HTMLButtonEleme
     const {
         onClick
     } = props;
+    
     return <div className="btn-wrapper">
         <button id="toggleSettingsPane" onClick={onClick}>
             Advanced Options 

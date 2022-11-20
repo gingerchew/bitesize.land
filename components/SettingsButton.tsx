@@ -32,7 +32,7 @@ export const buttonStyles = `
   }`
 
 
-export default function Button(props: JSX.HTMLAttributes<HTMLButtonElement>) {
+export default function SettingsButton(props: JSX.HTMLAttributes<HTMLButtonElement>) {
     const {
         onClick
     } = props;

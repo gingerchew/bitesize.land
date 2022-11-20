@@ -1,4 +1,3 @@
-import { paper, ink } from "#/routes/_app.tsx"
 import { JSX } from "https://esm.sh/v94/preact@10.11.0/jsx-runtime/src/index.d.ts"
 
 // https://web.dev/building-a-switch-component/
@@ -6,6 +5,7 @@ const trackStyles = `
     .gui-switch {
         --track-size: calc(var(--thumb-size) * 2);
         --track-padding: 3px;
+        color: var(--ink);
         /* Colors found in _app */
     }
 

@@ -1,6 +1,4 @@
 import Icons from "#/components/Icons.tsx";
-// import IconToggle from "#/components/IconToggle.tsx";
-import { IS_BROWSER } from "$fresh/runtime.ts";
 
 export default function Footer() {
   return (

@@ -10,6 +10,6 @@ import { emotionPlugin } from "emotion"
 
 await start(manifest, {
     plugins: [
-        emotionPlugin()
+        emotionPlugin(),
     ]
 });

@@ -142,6 +142,7 @@ export default function App({ Component }: AppProps) {
         <link href={asset('favicon.svg')} rel="icon" type="image/svg+xml" />
         <link href={asset('favicon.png')} rel="icon" type="image/png" />
         <meta name="theme-color" content={ink} />
+        <script data-domain="bitesize.land" src="https://plausible.io/js/script.js"></script>
       </Head>
       <header>
         <h1>BiteSize.Land</h1>

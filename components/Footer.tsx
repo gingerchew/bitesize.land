@@ -23,7 +23,6 @@ export default function Footer() {
           <span class="sr-only">Twitter</span>
           <Icons.Twitter />
         </a>
-        {/*<script defer data-domain="bitesize.land" src="https://plausible.io/js/script.js"></script>*/}
       </footer>
     </>
   );

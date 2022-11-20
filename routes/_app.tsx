@@ -7,7 +7,7 @@ import { byteCountStyles } from "#/islands/SizeList.tsx";
 import { buttonStyles } from "#/components/SettingsButton.tsx";
 import { controlStyles } from "#/islands/Controls.tsx";
 import { iconToggleStyles } from "#/components/IconToggle.tsx";
-import Footer from "#/islands/Footer.tsx";
+import Footer from "#/components/Footer.tsx";
 
 /*
 export const ink = "#b51bed",
@@ -102,6 +102,9 @@ injectGlobal`
     font-size: clamp(36px, 36px + 2.5vw, 64px);
     letter-spacing: -3px;
     word-spacing: 10px;
+  }
+  svg {
+    pointer-events: none;
   }
   p {
     letter-spacing: 0.5px;

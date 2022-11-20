@@ -1,41 +1,11 @@
 import Icons from "#/components/Icons.tsx";
-import IconToggle from "#/components/IconToggle.tsx";
+// import IconToggle from "#/components/IconToggle.tsx";
 import { IS_BROWSER } from "$fresh/runtime.ts";
-import { useEffect, useState } from "preact/hooks";
-
-const checkDarkModeState = () => {
-  if (IS_BROWSER) {
-    const ls = localStorage.getItem("darkmode");
-    const media = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    return (media || ls === "dark");
-  }
-  return false;
-};
 
 export default function Footer() {
-  const [darkModeState, setDarkModeState] = useState(checkDarkModeState);
-
-  useEffect(() => {
-    if (IS_BROWSER) {
-      localStorage.setItem("darkmode", `${darkModeState ? "dark" : "light"}`);
-      document.documentElement.classList.toggle("dark", darkModeState);
-    } else {
-        const savedDarkMode = getCookies('darkmode');
-        console.log(savedDarkMode);
-    }
-  }, [darkModeState]);
-
-  checkDarkModeState();
-
   return (
     <>
       <footer>
-        <IconToggle
-          isActive={darkModeState}
-          onClick={() => setDarkModeState(!darkModeState)}
-        >
-          {darkModeState ? <Icons.Moon /> : <Icons.Sun />}
-        </IconToggle>
         <a
           href="https://github.com/gingerchew/bitesize.land"
           className="icon-wrapper"

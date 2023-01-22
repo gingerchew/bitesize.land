@@ -8,12 +8,15 @@ const messages:Record<string, string> = {
 }
 
 export default function DarkmodeToggle() {
-    const ls = new Proxy(localStorage, {
+    const ls = new Proxy({} as Record<string, string>, {
         get(target, p:string, _receiver) {
+            if (window.localStorage) return localStorage[p];
+
             return target[p];
         },
         set(target, p:string, newValue, _receiver) {
             target[p] = newValue;
+            if (window.localStorage) localStorage[p] = newValue;
             
             return true;
         },

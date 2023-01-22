@@ -1,6 +1,6 @@
 import Toggle from "#/components/Toggle.tsx";
 import { useContext } from "preact/hooks";
-import { ControlContext } from "#/islands/EditorArea.tsx";
+import { GeneralContext } from "#/islands/EditorArea.tsx";
 
 export const controlStyles = `
 .controls {
@@ -74,33 +74,33 @@ export const controlStyles = `
 
 
 export default function Controls() {
-  const { currentControls, setControl } = useContext(ControlContext);
+  const { currentStates, setStates } = useContext(GeneralContext);
   return (
       <div class="controls-compression">
         <Toggle 
             for="useGzip"
             label="GZIP"
-            checked={currentControls.isGzipChecked}
-            onChange={({ target }) => setControl({
-                ...currentControls,
+            checked={currentStates.isGzipChecked}
+            onChange={({ target }) => setStates({
+                ...currentStates,
                 isGzipChecked: (target as HTMLInputElement)?.checked
             })}
         />
         <Toggle 
             for="useBrotli"
             label="Brotli"
-            checked={currentControls.isBrotliChecked}
-            onChange={({ target }) => setControl({
-                ...currentControls,
+            checked={currentStates.isBrotliChecked}
+            onChange={({ target }) => setStates({
+                ...currentStates,
                 isBrotliChecked: (target as HTMLInputElement)?.checked
             })}
         />
         <Toggle
           for="includeWhiteSpace"
           label="Include White Space"
-          checked={currentControls.isWhiteSpaceIncluded}
-          onChange={({ target }) => setControl({
-            ...currentControls,
+          checked={currentStates.isWhiteSpaceIncluded}
+          onChange={({ target }) => setStates({
+            ...currentStates,
             isWhiteSpaceIncluded: (target as HTMLInputElement)?.checked
           })}
         />

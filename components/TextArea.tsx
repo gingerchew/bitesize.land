@@ -1,12 +1,6 @@
 import { JSX } from 'preact';
 import { textareaRef } from "#/islands/EditorArea.tsx";
 
-function FloatingLabel(props: JSX.HTMLAttributes<HTMLElement>) {
-    return <span class="floating-label">
-        {props.children}
-    </span>
-}
-
 export const textAreaStyles = `
 .textarea {
     max-width: 100%;
@@ -35,6 +29,7 @@ export const textAreaStyles = `
 /* @TODO: confusing, refactor later :) */
 .textarea textarea {
     border-color: transparent;
+    color: inherit;
     resize: vertical;
     width: 100%;
     outline-offset: 10px;

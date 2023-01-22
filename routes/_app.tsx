@@ -23,29 +23,34 @@ injectGlobal`
   color-scheme: dark light;
   --ink: ${ink};
   --paper: ${paper};
-}
-:root.dark {
-  --ink: ${paper};
-  --paper: ${ink}
-}
-@media (prefers-color-scheme: dark) {
-  :root {
-    --ink: ${paper};
-    --paper: ${ink};
-  }
-}
-.gui-switch {
   --track-inactive: ${paper};
   --track-active: ${ink};
   --track-color-inactive: ${paper};
   --track-color-active: ${ink};
 }
+:root.dark {
+  --ink: ${paper};
+  --paper: ${ink};
+  --track-inactive: ${ink};
+  --track-active: ${paper};
+  --track-color-inactive: ${ink};
+  --track-color-active: ${paper}
+}
 @media (prefers-color-scheme: dark) {
-  .gui-switch {
+  :root {
+    --ink: ${paper};
+    --paper: ${ink};
     --track-inactive: ${ink};
     --track-active: ${paper};
     --track-color-inactive: ${ink};
     --track-color-active: ${paper}
+  }
+}
+.gui-switch {
+}
+
+@media (prefers-color-scheme: dark) {
+  .gui-switch {
   }
 }
   *,

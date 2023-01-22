@@ -2,44 +2,22 @@ import { useEffect, useState } from "preact/hooks";
 import Icons from "#/components/Icons.tsx";
 import IconToggle from "#/components/IconToggle.tsx";
 
-const ls = new Proxy(localStorage, {
-    get(target, p:string, _receiver) {
-        return target[p];
-    },
-    set(target, p:string, newValue, _receiver) {
-        target[p] = newValue;
-        
-        return true;
-    },
-});
-
-
 const messages:Record<string, string> = {
     dark: "Disable Dark Mode",
     light: "Enable Dark Mode"
 }
 
 export default function DarkmodeToggle() {
-    const getInitialMode = () => {
-        const root = document.documentElement;
-
-        if (ls.dm) {
-            root.classList.add(ls.dm);
-            return ls.dm;
-        }
-
-        const prefersDark = matchMedia('(prefers-color-scheme: dark)').matches;
-
-        if (prefersDark) {
-            root.classList.add('dark');
-            ls.dm = 'dark';
-        } else {
-            root.classList.add('light');
-            ls.dm = 'light';
-        }
-
-        return ls.dm;
-    }
+    const ls = new Proxy(localStorage, {
+        get(target, p:string, _receiver) {
+            return target[p];
+        },
+        set(target, p:string, newValue, _receiver) {
+            target[p] = newValue;
+            
+            return true;
+        },
+    });
 
     const updateClass = (next:string) => {
         document.documentElement.classList.add(next);

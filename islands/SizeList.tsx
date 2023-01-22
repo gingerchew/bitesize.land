@@ -1,7 +1,7 @@
 import List from '#/components/List.tsx';
 import { compress as _brotli } from "https://deno.land/x/brotli@0.1.7/mod.ts";
 import { gzipEncode as gzip } from "https://raw.githubusercontent.com/manyuanrong/wasm_gzip/master/mod.ts";
-import { ByteLength, ControlStates, ControlContext } from '#/islands/EditorArea.tsx';
+import { ByteLength, GeneralStates, GeneralContext } from '#/islands/EditorArea.tsx';
 import { useContext, useEffect, useState } from 'preact/hooks';
 
 export const byteCountStyles = `
@@ -54,7 +54,7 @@ const res = {
     brotli: byte0,
     length: byte0
 };
-type CalculateOptions = Omit<Omit<ControlStates, "gzipLevel">, "paneState">;
+type CalculateOptions = Omit<Omit<GeneralStates, "isDarkmodeEnabled">, "paneState">;
 
 const calculateByteSize = (value:string, options: CalculateOptions, cb: (state: ByteLength) => void) => {
     
@@ -85,35 +85,35 @@ const calculateByteSize = (value:string, options: CalculateOptions, cb: (state: 
     
     const brotliOutput = _brotli(encodedValue);
 
-    res.brotli = res.brotli = getUnit(brotliOutput.length) // output.length
+    res.brotli = getUnit(brotliOutput.length) // output.length
     
     cb(res);
 }
 
 export default function SizeList(props: { value: string }) {
     const {
-        currentControls: _currentControls
-    } = useContext(ControlContext);
+        currentStates: _currentStates
+    } = useContext(GeneralContext);
     
-    const currentControls = {
-        isBrotliChecked: _currentControls.isBrotliChecked,
-        isGzipChecked: _currentControls.isGzipChecked,
-        isWhiteSpaceIncluded: _currentControls.isWhiteSpaceIncluded
+    const currentStates = {
+        isBrotliChecked: _currentStates.isBrotliChecked,
+        isGzipChecked: _currentStates.isGzipChecked,
+        isWhiteSpaceIncluded: _currentStates.isWhiteSpaceIncluded
     };
 
     const [byteSize, setByteSize] = useState<ByteLength>({})
     
     useEffect(() => {
         calculateByteSize(props.value, {
-                ...currentControls
+                ...currentStates
             },
             setByteSize
         );
-    }, [ currentControls, props.value ]);
+    }, [ currentStates, props.value ]);
 
     return <List 
         byteSize={byteSize}
-        isGzipChecked={currentControls.isGzipChecked}
-        isBrotliChecked={currentControls.isBrotliChecked}
+        isGzipChecked={currentStates.isGzipChecked}
+        isBrotliChecked={currentStates.isBrotliChecked}
     />
 }

@@ -2,29 +2,28 @@ import { StateUpdater, useState } from "preact/hooks";
 import { createContext, createRef } from "preact";
 import TextArea from "#/components/TextArea.tsx";
 import SettingsButton from "#/components/SettingsButton.tsx";
+import DarkmodeToggle from "#/islands/DarkmodeToggle.tsx";
 import SizeList from "#/islands/SizeList.tsx";
 import Controls from "#/islands/Controls.tsx";
 
-const ControlDefaults = {
+const GeneralDefaults = {
   isGzipChecked: false,
   isBrotliChecked: false,
-  isWhiteSpaceIncluded: true,
-  gzipLevel: 6,
-  paneState: false,
+  isWhiteSpaceIncluded: true
 }
 
-export type ControlStates = typeof ControlDefaults
+export type GeneralStates = typeof GeneralDefaults
 
 export type SizeListProps = Omit<{
   value: string;
-} & ControlStates, "isWhiteSpaceIgnored">;
+} & GeneralStates, "isWhiteSpaceIgnored">;
 
-type ControlContext = {
-  currentControls: ControlStates;
-  setControl: StateUpdater<ControlStates>
+type GeneralContext = {
+  currentStates: GeneralStates;
+  setStates: StateUpdater<GeneralStates>
 }
 
-export const ControlContext = createContext<ControlContext>({} as ControlContext);
+export const GeneralContext = createContext<GeneralContext>({} as GeneralContext);
 
 export const textareaRef = createRef<HTMLTextAreaElement>();
 
@@ -37,33 +36,30 @@ export interface ByteLength {
 export default function EditorArea() {
   const [state, setState] = useState("");
   const [paneState, setPaneState] = useState(false);
-  const [currentControls, setControl] = useState<ControlStates>({
+  const [currentStates, setStates] = useState<GeneralStates>({
     isGzipChecked: false,
     isBrotliChecked: false,
-    isWhiteSpaceIncluded: true,
-    paneState: false,
-    gzipLevel: 6
+    isWhiteSpaceIncluded: true
   });
 
   const onInput = (target: HTMLTextAreaElement) => setState(target.value);
-  const onClick = () => setPaneState(!paneState);
 
 
   return (
     <>
-      <ControlContext.Provider value={{ currentControls, setControl }}>
+      <GeneralContext.Provider value={{ currentStates, setStates }}>
         <TextArea
           onInput={(e) => onInput(e.target as unknown as HTMLTextAreaElement)}
         >
-          <div className="controls" data-pane={currentControls.paneState}>
-            <SettingsButton onClick={onClick} />
+          <div className="controls" data-pane={paneState}>
+            <SettingsButton onClick={() => setPaneState(!paneState)} />
             <Controls />
           </div>
           <SizeList
             value={state}
           />
         </TextArea>
-      </ControlContext.Provider>
+      </GeneralContext.Provider>
     </>
   );
 }

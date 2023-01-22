@@ -7,6 +7,7 @@ import { byteCountStyles } from "#/islands/SizeList.tsx";
 import { buttonStyles } from "#/components/SettingsButton.tsx";
 import { controlStyles } from "#/islands/Controls.tsx";
 import { iconToggleStyles } from "#/components/IconToggle.tsx";
+import DarkmodeToggle from "#/islands/DarkmodeToggle.tsx";
 import Footer from "#/components/Footer.tsx";
 
 /*
@@ -17,7 +18,8 @@ export const ink = "#03104e",
   paper = "skyblue";
 
 injectGlobal`
-:root {
+:root,
+:root.light {
   color-scheme: dark light;
   --ink: ${ink};
   --paper: ${paper};
@@ -149,6 +151,7 @@ export default function App({ Component }: AppProps) {
         <p>
           Inspired by <a href="https://bytesizematters.com">ByteSizeMatters</a> by <a href="https://lea.verou.me/">Lea Verou</a>.
         </p>
+        <DarkmodeToggle />
       </header>
       <Component />
       <Footer />

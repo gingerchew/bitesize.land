@@ -36,7 +36,7 @@ export default function DarkmodeToggle() {
     */
     // const curr = getInitialMode();
     // use curr to set state
-    const [mode, setMode] = useState(localStorage.dm || matchMedia('prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+    const [mode, setMode] = useState(window.localStorage?.dm || matchMedia('prefers-color-scheme: dark)').matches ? 'dark' : 'light');
 
     const onClick = () => {
         const c = mode;

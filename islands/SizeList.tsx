@@ -74,8 +74,6 @@ export default function SizeList(props: { value: string }) {
             v = v.replaceAll(/\s/gm, '');
         }
         
-        if (res.prev === v) return cb(res);
-        
         res.prev = v;
 
         const encodedValue = encoder.encode(v);
@@ -106,12 +104,11 @@ export default function SizeList(props: { value: string }) {
     };
 
     const [byteSize, setByteSize] = useState<ByteLength>({})
-    
     useEffect(() => {
         calculateByteSize(props.value, {
-                ...currentStates
-            },
-            setByteSize
+            ...currentStates
+        },
+        setByteSize
         );
     }, [ currentStates, props.value ]);
 

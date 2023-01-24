@@ -1,5 +1,5 @@
 import { StateUpdater, useState } from "preact/hooks";
-import { createContext, createRef } from "preact";
+import { createContext, createRef, JSX } from "preact";
 import TextArea from "#/components/TextArea.tsx";
 import SettingsButton from "#/components/SettingsButton.tsx";
 import DarkmodeToggle from "#/islands/DarkmodeToggle.tsx";
@@ -42,14 +42,18 @@ export default function EditorArea() {
     isWhiteSpaceIncluded: true
   });
 
-  const onInput = (target: HTMLTextAreaElement) => setState(target.value);
+  const onInput = (event: JSX.TargetedEvent<HTMLTextAreaElement,Event>) => {
+    const target = event.target as unknown as HTMLTextAreaElement;
+    
+    setState(target.value);
+  }
 
 
   return (
     <>
       <GeneralContext.Provider value={{ currentStates, setStates }}>
         <TextArea
-          onInput={(e) => onInput(e.target as unknown as HTMLTextAreaElement)}
+          onInput={onInput}
         >
           <div className="controls" data-pane={paneState}>
             <SettingsButton onClick={() => setPaneState(!paneState)} />

@@ -1,4 +1,4 @@
-import Toggle from "#/components/Toggle.tsx";
+// import Toggle from "#/components/Toggle.tsx";
 import { useContext } from "preact/hooks";
 import { GeneralContext } from "#/islands/EditorArea.tsx";
 

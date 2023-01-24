@@ -93,6 +93,12 @@ injectGlobal`
     grid-area: header;
     padding-top: 10vh;
   }
+  header > div {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 1rem;
+  }
   header > * {
     margin: 0;
     padding: 0;
@@ -152,11 +158,13 @@ export default function App({ Component }: AppProps) {
         <script data-domain="bitesize.land" src="https://plausible.io/js/script.js"></script>
       </Head>
       <header>
-        <h1>BiteSize.Land</h1>
+        <div>
+          <h1>BiteSize.Land</h1>
+          <DarkmodeToggle />
+        </div>
         <p>
           Inspired by <a href="https://bytesizematters.com">ByteSizeMatters</a> by <a href="https://lea.verou.me/">Lea Verou</a>.
         </p>
-        <DarkmodeToggle />
       </header>
       <Component />
       <Footer />

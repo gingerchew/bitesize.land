@@ -5,8 +5,8 @@ import { ByteLength, GeneralStates, GeneralContext } from '#/islands/EditorArea.
 import { useContext, useEffect, useState } from 'preact/hooks';
 
 export const byteCountStyles = `
-    .byte-count {
-        color: var(--ink);
+  .byte-count {
+    color: var(--ink);
     text-align: right;
     font-size: clamp(24px, 24px + 1vw, 35px);
     font-weight: 800;
@@ -48,49 +48,53 @@ export const getUnit = (value:number, decimals = 2) => {
     
     return `${parseFloat(v.toFixed(decimals < 0 ? 0 : decimals))} ${sizes[i]}`;
 }
-const res = {
-    prev: '',
-    gzip: byte0,
-    brotli: byte0,
-    length: byte0
-};
+
 type CalculateOptions = Omit<Omit<GeneralStates, "isDarkmodeEnabled">, "paneState">;
 
-const calculateByteSize = (value:string, options: CalculateOptions, cb: (state: ByteLength) => void) => {
-    
-    if (!value) {
-        cb(res);
-        return;
-    }
-    
-    let v = value as string;
-    
-    if (!options.isWhiteSpaceIncluded) {
-        v = v.replaceAll(/\s/gm, '');
-    }
-    
-    if (res.prev === v) return cb(res);
-    
-    res.prev = v;
-
-    const encodedValue = encoder.encode(v);
-    
-    const encodedLength = encodedValue.length;
-    
-    res.length = res.length = getUnit(encodedLength);
-
-    const gzipOutput = gzip(encodedValue);
-
-    res.gzip = res.gzip = getUnit(gzipOutput.length);
-    
-    const brotliOutput = _brotli(encodedValue);
-
-    res.brotli = getUnit(brotliOutput.length) // output.length
-    
-    cb(res);
-}
 
 export default function SizeList(props: { value: string }) {
+
+    const res = {
+        prev: '',
+        gzip: byte0,
+        brotli: byte0,
+        length: byte0
+    };
+
+    const calculateByteSize = (value:string, options: CalculateOptions, cb: (state: ByteLength) => void) => {
+        
+        if (!value) {
+            cb(res);
+            return;
+        }
+        
+        let v = value as string;
+        
+        if (!options.isWhiteSpaceIncluded) {
+            v = v.replaceAll(/\s/gm, '');
+        }
+        
+        if (res.prev === v) return cb(res);
+        
+        res.prev = v;
+
+        const encodedValue = encoder.encode(v);
+        
+        const encodedLength = encodedValue.length;
+        
+        res.length = res.length = getUnit(encodedLength);
+
+        const gzipOutput = gzip(encodedValue);
+
+        res.gzip = res.gzip = getUnit(gzipOutput.length);
+        
+        const brotliOutput = _brotli(encodedValue);
+
+        res.brotli = getUnit(brotliOutput.length) // output.length
+        
+        cb(res);
+    }
+
     const {
         currentStates: _currentStates
     } = useContext(GeneralContext);

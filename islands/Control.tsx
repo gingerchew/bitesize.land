@@ -4,7 +4,7 @@ interface ControlProps extends JSX.HTMLAttributes<HTMLInputElement|HTMLSelectEle
 }
 
 export default function Control(props: ControlProps) {
-
+    /* Preserving just in case
     const SelectControl = () => (
         <select id={props.id} onSelect={props.onChange} onChange={props.onChange}>
             {props.children}
@@ -13,7 +13,7 @@ export default function Control(props: ControlProps) {
 
     const InputControl = () => (
         <input type={props.type} id={props.id} checked={props.checked} onChange={props.onChange} />
-    )
+    )*/
 
 
     return (
@@ -21,7 +21,7 @@ export default function Control(props: ControlProps) {
             <label for={props.id}>
                 {props.label}
             </label>
-            {props.type === 'select' ? <SelectControl /> : <InputControl />}
+            <input type={props.type} id={props.id} checked={props.checked} onChange={props.onChange} />
         </div>
     )
 }

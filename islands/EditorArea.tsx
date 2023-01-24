@@ -2,7 +2,6 @@ import { StateUpdater, useState } from "preact/hooks";
 import { createContext, createRef, JSX } from "preact";
 import TextArea from "#/components/TextArea.tsx";
 import SettingsButton from "#/components/SettingsButton.tsx";
-import DarkmodeToggle from "#/islands/DarkmodeToggle.tsx";
 import SizeList from "#/islands/SizeList.tsx";
 import Controls from "#/islands/Controls.tsx";
 

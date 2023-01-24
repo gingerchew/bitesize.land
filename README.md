@@ -8,7 +8,7 @@ Inspired by [ByteSizeMatters.com](https://bytesizematters.com) by [Lea Verou](ht
 
 - Lea Verou and their ongoing work making the web awesome
 - Deno Team and the Fresh framework
-- FontAwesome for the Twitter and Github icons
+- FontAwesome for the their icons
 - Twemoji for the favicon
 
 ## Todo

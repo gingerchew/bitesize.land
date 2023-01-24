@@ -14,7 +14,5 @@ Inspired by [ByteSizeMatters.com](https://bytesizematters.com) by [Lea Verou](ht
 ## Todo
 
 - Add multiple editor instances
-- Improve handling of large amounts of text
-    - Probably a worker but had issue getting it to work inside of Fresh *shrug*
 
 [![Made with Fresh](https://fresh.deno.dev/fresh-badge-dark.svg)](https://fresh.deno.dev/)

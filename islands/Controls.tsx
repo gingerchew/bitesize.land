@@ -75,35 +75,48 @@ export const controlStyles = `
 
 export default function Controls() {
   const { currentStates, setStates } = useContext(GeneralContext);
-  return (
-      <div class="controls-compression">
-        <Toggle 
-            for="useGzip"
-            label="GZIP"
-            checked={currentStates.isGzipChecked}
-            onChange={({ target }) => setStates({
-                ...currentStates,
-                isGzipChecked: (target as HTMLInputElement)?.checked
-            })}
+  
+  return <>
+    <div class="controls-compression">
+      <label class="gui-switch" for="useGzip">
+        GZIP
+        <input type="checkbox" 
+          role="switch" 
+          id="useGzip"
+          name="useGzip"
+          checked={currentStates.isGzipChecked}
+          onChange={({ target }) => setStates({
+            ...currentStates,
+            isGzipChecked: (target as HTMLInputElement)?.checked
+          })}
         />
-        <Toggle 
-            for="useBrotli"
-            label="Brotli"
-            checked={currentStates.isBrotliChecked}
-            onChange={({ target }) => setStates({
-                ...currentStates,
-                isBrotliChecked: (target as HTMLInputElement)?.checked
-            })}
+      </label>
+      <label for="useBrotli" className="gui-switch">
+        Brotli
+        <input type="checkbox"
+          name="useBrotli"
+          id="useBrotli"
+          role="switch"
+          checked={currentStates.isBrotliChecked}
+          onChange={({ target }) => setStates({
+            ...currentStates,
+            isBrotliChecked: (target as HTMLInputElement)?.checked
+          })}
         />
-        <Toggle
-          for="includeWhiteSpace"
-          label="Include White Space"
+      </label>
+      <label for="includeWhiteSpace" className="gui-switch">
+        Include White Space
+        <input type="checkbox"
+          name="includeWhiteSpace"
+          id="includeWhiteSpace"
+          role="switch"
           checked={currentStates.isWhiteSpaceIncluded}
           onChange={({ target }) => setStates({
             ...currentStates,
             isWhiteSpaceIncluded: (target as HTMLInputElement)?.checked
           })}
         />
-      </div>
-  );
+      </label>
+    </div>
+  </>
 }
